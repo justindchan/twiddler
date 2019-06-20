@@ -21,6 +21,7 @@
           tweetDates.push(tweet.created_at);
         }
         //setTimeout check every 30s if tweets length has changed, display new
+        // reversed while loop, starting at 0 instead of end, added if statement to check for previous time stamps of tweets to ommit them.
         var scheduleNextCheck = function(){
           var index = 0;
         while(index < streams.home.length){
