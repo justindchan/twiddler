@@ -1,0 +1,44 @@
+/*css for twiddler*/
+
+body{
+  background-color: #1b2631;
+  color: white;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+.newsfeed {
+	border: 5px solid white; 
+	display: flex;
+	margin-right: auto;
+	margin-left: auto;
+	flex-direction: column;
+	width: 300px;
+	background-color: #1b2631;
+	color: #ffffff;
+}
+
+.tweet {
+	color: #ffffff;
+    background: #1b2631;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+i {
+	
+    font-size: 200%;
+}
+
+.username {
+
+}
+
+a:link {
+color: #ffffff;
+}
+a:visited {
+color: #ffffff;
+}
+a:hover {
+color: #b3b3b3;
+}

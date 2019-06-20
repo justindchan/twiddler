@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="https://kit.fontawesome.com/913e7b74f2.js"></script>
     <link rel='stylesheet' type='text/css' href='twiddler.css'>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
 
   </head>
   <body>
+    <a href="index.html"><i class="fas fa-kiwi-bird"></i></a>
+
     <div class='newsfeed'>
-       
+
     
     </div>
     <script>
@@ -17,49 +20,66 @@
         var $newsfeed = $('.newsfeed');
         $newsfeed.html('');
         var tweetDates = [];
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div class="tweet"></div>');
-          
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + ' Created on: ' + tweet.created_at);
-          
+        
 
-          $tweet.appendTo($newsfeed);
-          index -= 1;
-          tweetDates.push(tweet.created_at);
-        }
-        //setTimeout check every 30s if tweets length has changed, display new
-        // reversed while loop, starting at 0 instead of end, added if statement to check for previous time stamps of tweets to ommit them.
+        // function makeTweet(){
+        //   var tweet = streams.home[index];
+        //   var $tweet = $('<div class="tweet"></div>');
+        //   var $username = $('<div class="username"></div>');
+        //   var $message = $('<div class="message"></div>')
+        //   var $date = $('<div class="date"></div>');
+        //   $username.prependTo($tweet).text('@' + tweet.user + ': ');
+        //   $message.appendTo($tweet).text(tweet.message);
+        //   $date.appendTo($tweet).text('Posted on: ' + (tweet.created_at.getMonth() + 1) + '-' + tweet.created_at.getDate() + '-' + tweet.created_at.getFullYear());
+        //   var $message = $('<span class="message"></span>');
+        //   tweetDates.push(tweet.created_at);
 
-        var addNewTweets = function(){
-          var index = 0;
+        // };
+      var makeTweets = function(){
+        var index = 0;
+          
           while(index < streams.home.length){
             var tweet = streams.home[index];
             if(tweetDates.includes(tweet.created_at)){
               index += 1;
             } else {
               var $tweet = $('<div class="tweet"></div>');
-              $tweet.text('@' + tweet.user + ': ' + tweet.message + ' Created on: ' + tweet.created_at);
+              var $username = $('<a href="user.html"></a>');
+              var $message = $('<div class="message"></div>');
+              var $date = $('<div class="date"></div>');
+              $username.prependTo($tweet).text('@' + tweet.user + ': ');
+              $message.appendTo($tweet).text(tweet.message);
+              $date.appendTo($tweet).text('Posted on: ' + tweet.created_at.getHours() + ':' + tweet.created_at.getMinutes() + ' - ' + (tweet.created_at.getMonth() + 1) + '/' + tweet.created_at.getDate() + '/' + tweet.created_at.getFullYear());
+              var $message = $('<span class="message"></span>');
+              tweetDates.push(tweet.created_at);
               $tweet.prependTo($newsfeed);
               index += 1;
-              tweetDates.push(tweet.created_at);
           }
-         }
-        };
+           
+        }
+      };
+        //setTimeout check every 1.5 seconds (will display the next tweet as soon as it's generated.
+        // reversed while loop, starting at 0 instead of end, added if statement to check for previous time stamps of tweets in orde to know to ommit previous tweets.
+      
 
         var scheduleNextCheck = function(){
-          addNewTweets();
+          makeTweets();
           setTimeout(scheduleNextCheck, 1500);
         };
 
         scheduleNextCheck();
 
         //$(), selector to select usernames
+        $(document).on('click', 'a', function(){
+            localStorage.username = event.target.text;
+        });
+        
         //add on click event 
         //use event.target to save currently selected username in var
-        //clear content of body and add new content by replicating same process but 
+        //when clicked, redefine scheduleNextCheck to new function
+        //remove all tweets where tweet.user !== username
         //tweet = streams.user[username] instead of tweet = streams.home
+        //create new html page for user, port click event data over?
       });
 
     </script>
