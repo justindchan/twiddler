@@ -10,16 +10,34 @@
       $(document).ready(function(){
         var $body = $('body');
         $body.html('');
-
+        var tweetDates = [];
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + ' Created on: ' + tweet.created_at);
           $tweet.appendTo($body);
           index -= 1;
+          tweetDates.push(tweet.created_at);
         }
-
+        //setTimeout check every 30s if tweets length has changed, display new
+        var scheduleNextCheck = function(){
+          var index = 0;
+        while(index < streams.home.length){
+          var tweet = streams.home[index];
+          if(tweetDates.includes(tweet.created_at)){
+            index += 1;
+          } else {
+            var $tweet = $('<div></div>');
+            $tweet.text('@' + tweet.user + ': ' + tweet.message + ' Created on: ' + tweet.created_at);
+            $tweet.prependTo($body);
+            index += 1;
+            tweetDates.push(tweet.created_at);
+          }
+        }
+          setTimeout(scheduleNextCheck, 1500);
+        };
+        scheduleNextCheck();
       });
 
     </script>
