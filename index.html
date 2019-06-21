@@ -14,6 +14,13 @@
 
     <h2> home </h2>
 
+    <form action="index.html" method="get">
+      Username: <input type="text" name="visitor"><br>
+      What's quackin'?: <input type="text" name="message"><br>
+      <input type="submit" value="Twidd">
+
+    </form>
+
 
     <div class='newsfeed'>
     
@@ -22,6 +29,8 @@
     <script>
 
     $(document).ready(function(){
+      
+      window.visitor = 'Anonymous';
 
       var $newsfeed = $('.newsfeed');
       $newsfeed.html('');
@@ -63,8 +72,20 @@
 
         //When username is clicked, store that username in local storage
 
-        $(document).on('click', 'a', function(){
+        $(document).on('click', 'a', function() {
             localStorage.username = event.target.text;
+        });
+        
+        
+        $(document).on('submit', 'form', function() {
+            visitor = event.srcElement[0].value;
+            //if no visitor key in streams.users object
+            if (!window.users.includes(visitor)) {
+              streams.users[visitor] = [];
+            }
+            //then add streams.users[visitor] = [];
+            writeTweet(event.srcElement[1].value);
+            return false;
         });
         
       
