@@ -7,19 +7,28 @@
     <link rel='stylesheet' type='text/css' href='twiddler.css'>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/livestamp/1.1.2/livestamp.js"></script>
+
 
   </head>
   <body>
   	
   	<a href="index.html"><i class="fas fa-kiwi-bird"></i></a>
+    <h2>  </h2>
+
+
+
     <div class='newsfeed'>
    
 
     </div>
     <script>
 
-      $(document).ready(function(){
+      $(document).ready(function()  {
+        $('h2').text(localStorage.username.slice(0, localStorage.username.length -2));
         
+
         var $newsfeed = $('.newsfeed');
         $newsfeed.html('');
         var tweetDates = [];
@@ -37,7 +46,7 @@
               var $date = $('<div class="date"></div>');
               $username.prependTo($tweet).text('@' + tweet.user + ': ');
               $message.appendTo($tweet).text(tweet.message);
-              $date.appendTo($tweet).text('Posted on: ' + tweet.created_at.getHours() + ':' + tweet.created_at.getMinutes() + ' - ' + (tweet.created_at.getMonth() + 1) + '/' + tweet.created_at.getDate() + '/' + tweet.created_at.getFullYear());
+              $date.appendTo($tweet).livestamp(tweet.created_at);
               var $message = $('<span class="message"></span>');
               tweetDates.push(tweet.created_at);
               $tweet.prependTo($newsfeed);
